@@ -1,0 +1,193 @@
+DEF Markers Pose {
+  1translation 1.24 0 0.001
+  children [
+    Solid {
+      translation 1 1 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=0.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-0"
+    }
+    Solid {
+      translation 1 0 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=1.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-1"
+    }
+    Solid {
+      translation 1 -1 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=2.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-2"
+    }
+    Solid {
+      translation 0 1 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=3.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-3"
+    }
+    Solid {
+      translation 0 -1 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=4.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-4"
+    }
+    Solid {
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=5.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-5"
+    }
+    Solid {
+      translation -1 1 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=6.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-6"
+    }
+    Solid {
+      translation -1 0 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=7.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-7"
+    }
+    Solid {
+      translation -1 -1 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../Additional_Textures/aruco-marker-ID=8.jpg"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker-8"
+    }
+  ]
+}
