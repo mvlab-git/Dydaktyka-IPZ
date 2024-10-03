@@ -7,8 +7,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.1088303362981855 -0.9469266855661255 -0.3024662130949105 5.556906363035311
-  position -2.7639923596467244 -1.6461565990884368 3.9182433659641362
+  orientation -0.2192794736697134 -0.2793100754677902 0.9348274675945882 4.8861039282324334
+  position 0.06399938957639029 4.721093605825336 3.2826277982161938
 }
 TexturedBackground {
 }
@@ -17,7 +17,7 @@ TexturedBackgroundLight {
 RectangleArena {
   floorSize 10 10
 }
-Robot {
+DEF cameraRobot Robot {
   translation 0 0 1.5
   rotation 0 1 0 0.785
   children [
@@ -36,10 +36,11 @@ Robot {
     }
   ]
   name "cameraRobot"
-  controller "cameraController"
+  controller "<extern>"
+  supervisor TRUE
 }
 DEF Markers Pose {
-  translation 1.5 0 0.001
+  translation 1.75 0 0.001
   children [
     Solid {
       translation 0 0 0.0001
@@ -60,6 +61,7 @@ DEF Markers Pose {
     }
     Solid {
       translation 0.5 0.5 0
+      rotation 0 0 1 0.261799
       children [
         Shape {
           appearance PBRAppearance {
@@ -81,6 +83,7 @@ DEF Markers Pose {
     }
     Solid {
       translation 0.5 -0.5 0
+      rotation 0 0 1 -0.261795307179586
       children [
         Shape {
           appearance PBRAppearance {
@@ -102,6 +105,7 @@ DEF Markers Pose {
     }
     Solid {
       translation -0.5 0.5 0
+      rotation 0 0 1 -5.307179586466759e-06
       children [
         Shape {
           appearance PBRAppearance {
@@ -123,6 +127,7 @@ DEF Markers Pose {
     }
     Solid {
       translation -0.5 -0.5 0
+      rotation 0 0 1 -1.047195307179586
       children [
         Shape {
           appearance PBRAppearance {
@@ -145,7 +150,7 @@ DEF Markers Pose {
   ]
 }
 Solid {
-  translation 1.5 -1.49 0.05
+  translation 1.75 0 0.05
   children [
     Shape {
       appearance PBRAppearance {
@@ -160,51 +165,4 @@ Solid {
     }
   ]
   name "Ball"
-  boundingObject USE BALL
-  physics Physics {
-  }
-}
-Robot {
-  translation 1.5 -1.59 0.05
-  children [
-    SliderJoint {
-      jointParameters JointParameters {
-        axis 0 1 0
-      }
-      device [
-        LinearMotor {
-          name "Launcher"
-          maxVelocity 2
-          maxForce 100
-        }
-      ]
-      endPoint Solid {
-        children [
-          DEF smallBOX Shape {
-            appearance PBRAppearance {
-              baseColor 0.121569 0.0431373 1
-              transparency 0.1
-              roughness 1
-              metalness 0
-            }
-            geometry Box {
-              size 0.09 0.09 0.09
-            }
-          }
-        ]
-        boundingObject USE smallBOX
-      }
-    }
-    DEF Launcher Shape {
-      appearance PBRAppearance {
-        baseColor 0 0 0
-      }
-      geometry Box {
-        size 0.1 0.1 0.1
-      }
-    }
-  ]
-  name "Launcher_robot"
-  boundingObject USE Launcher
-  controller "Launcher"
 }
