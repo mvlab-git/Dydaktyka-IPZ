@@ -18,8 +18,8 @@ RectangleArena {
   floorSize 10 10
 }
 DEF cameraRobot Robot {
-  translation 0 0 1.5
-  rotation 0 1 0 0.785
+  translation 0 0 1.25
+  rotation 0 1 0 0.610865238
   children [
     Shape {
       appearance PBRAppearance {

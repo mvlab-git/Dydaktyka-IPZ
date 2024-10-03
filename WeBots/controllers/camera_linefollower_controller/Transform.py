@@ -1,36 +1,5 @@
 import numpy as np, cv2 as cv
 
-# Ścieżka zapisu macierzy transformacji
-PATH_MATRICES = 'Camera Calibration/CameraCalibration.npz'
-
-class ArucoDetector():
-    def __init__(self):
-        # Aruco detection
-        self.cArucoDet = cv.aruco.ArucoDetector(cv.aruco.getPredefinedDictionary(cv.aruco.DICT_6X6_50), cv.aruco.DetectorParameters())
-
-    def getArucoCorners(self, aImg: np.ndarray) -> tuple[list[list[int]],np.ndarray]:
-
-        aPreview = aImg.copy()
-
-        corners, ids, _ = self.cArucoDet.detectMarkers(cv.cvtColor(aImg.copy(), cv.COLOR_BGRA2GRAY))
-        if ids is None: ids = []   
-                    
-        lArucoCenters = [[int(np.mean(cor[0,:,0])),int(np.mean(cor[0,:,1]))] for cor in corners]
-        lArucoCenters, ids = [c for _, c in sorted(zip(ids, lArucoCenters))], sorted(ids)
-
-
-         
-        for c,id in zip(lArucoCenters, ids):
-            cv.circle(aPreview, (c[0], c[1]), 2, (0, 255, 0), -1)
-            cv.putText(aPreview, str(id), (c[0], c[1]), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv.LINE_AA)
-
-        if len(ids)==4: 
-            cv.polylines(aPreview, [np.array(lArucoCenters).astype(np.int32)], True, (0, 255, 0), 2)   
-            cv.line(aPreview, lArucoCenters[0], lArucoCenters[2], (0, 255, 0), 2)
-            cv.line(aPreview, lArucoCenters[1], lArucoCenters[3], (0, 255, 0), 2)
-
-        return lArucoCenters, aPreview
-
 class Transformer():
 
     def __init__(self):

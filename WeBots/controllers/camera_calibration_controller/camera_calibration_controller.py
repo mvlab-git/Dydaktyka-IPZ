@@ -21,20 +21,6 @@ TARGET_COORDS_XY = [
     (0.5, -0.5)  #id3
 ]
 
-
-def getKeys(keyboard:Keyboard):
-    """
-    Get up to 4 keys pressed at the same time, returns a list of the keys pressed as characters (capital letters).
-    """
-    keys = []
-    for i in range(4):  # 4, Max 8
-        key = keyboard.getKey()
-        if key == -1:
-            break
-        keys.append(chr(key))
-
-    return keys
-
 def getImage(camera:Camera):
     """
     Get BGRA NumPy array image from camera.
@@ -55,7 +41,6 @@ def getImage(camera:Camera):
 god_robot = Supervisor()
 camera: Camera
 
-keyboard = god_robot.getKeyboard()
 camera = god_robot.getDevice("Camera") #getCamera etc. for devices are depricated...
 
 # Get the time step of the current world.
@@ -63,7 +48,6 @@ timestep = int(god_robot.getBasicTimeStep())
 
 # Enable devices so they operate
 camera.enable(timestep)
-keyboard.enable(timestep)
 
 # Get and print camera parameters
 CAMERA_HEIGHT = camera.getHeight()
@@ -92,7 +76,10 @@ def calibrate(camera_position_xyz_relative_to_markers: list = [0,0,0], camera_an
 
     if len(aruco_centers) == 4:
         transformer.getTransformMatrices(aruco_centers, np.array(TARGET_COORDS_XY) + [x,y])
-        transformer.saveTransformMatrices("transformMatrices.npz")    
+        transformer.saveTransformMatrices("transformMatrices.npz")   
+        with open("transformMatrices.txt", "w") as f:
+            f.write(f"Camera height: {z}\n")
+            f.write(f"Camera angle: {camera_angle}\n")
 
     camera_angle = camera_angle/3.14*180
 
@@ -159,58 +146,58 @@ def detect_ball(image: np.ndarray, camera_position_xy_relative_to_ball: list = [
 
 mode = "calibrate"
 
+key = 0
 while god_robot.step(timestep) != -1:
     # Get and display camera image
     image = getImage(camera)
     # Get keys
-    keys = getKeys(keyboard)
 
-    if 'C' in keys:
+    if key == ord('c'):
         print("Changing mode to calibrate...")
         mode = "calibrate"
-    if 'P' in keys:
+    if key == ord('p'):
         print("Changing mode to preview...")
         mode = "preview"
 
-    if 'W' in keys:
+    if key == ord('w'):
         x,y,z = node_trans.getSFVec3f()
         x+=CAMERA_MOVEMENT_STEP
         node_trans.setSFVec3f([x,y,z])
-    if 'S' in keys:
+    if key == ord('s'):
         x,y,z = node_trans.getSFVec3f()
         x-=CAMERA_MOVEMENT_STEP
         node_trans.setSFVec3f([x,y,z])
 
-    if 'A' in keys:
+    if key == ord('a'):
         x,y,z = node_trans.getSFVec3f()
         y+=CAMERA_MOVEMENT_STEP
         node_trans.setSFVec3f([x,y,z])
-    if 'D' in keys:
+    if key == ord('d'):
         x,y,z = node_trans.getSFVec3f()
         y-=CAMERA_MOVEMENT_STEP
         node_trans.setSFVec3f([x,y,z])
 
-    if 'E' in keys:
+    if key == ord('e'):
         x,y,z = node_trans.getSFVec3f()
         z+=CAMERA_MOVEMENT_STEP
         node_trans.setSFVec3f([x,y,z])
-    if 'Q' in keys:
+    if key == ord('q'):
         x,y,z = node_trans.getSFVec3f()
         z-=CAMERA_MOVEMENT_STEP
         node_trans.setSFVec3f([x,y,z])
 
-    if 'F' in keys:
+    if key == ord('f'):
         rot = node_rot.getSFRotation()[-1]
         rot+=CAMERA_ROTATION_STEP
         node_rot.setSFRotation([0.0,1.0,0.0,rot])
-    if 'R' in keys:
+    if key == ord('r'):
         rot = node_rot.getSFRotation()[-1]
         rot-=CAMERA_ROTATION_STEP
         node_rot.setSFRotation([0.0,1.0,0.0,rot])
 
     x,y,z = node_trans.getSFVec3f()
     rot = node_rot.getSFRotation()[-1]
-    camera_position_xyz_relative_to_POI=[y,1.75-x,z]
+    camera_position_xyz_relative_to_POI=[y,2.75-x,z]
 
 
     if mode == "calibrate":
@@ -220,4 +207,4 @@ while god_robot.step(timestep) != -1:
         image_preview = detect_ball(image, camera_position_xyz_relative_to_POI, camera_angle=rot)
     
     cv.imshow("Preview", image_preview)
-    cv.waitKey(1)
+    key = cv.waitKey(1)

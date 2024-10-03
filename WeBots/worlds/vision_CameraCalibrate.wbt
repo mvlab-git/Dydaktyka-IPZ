@@ -1,0 +1,62 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.4247424527128171 -0.4799701366181597 -0.767608309503125 4.570624702820137
+  position -0.6123717826167835 -3.317725083854396 6.700692931198437
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 10 10
+}
+Robot {
+  translation 0 0 1.25
+  rotation 0 1 0 0.610865238
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.403922 0.368627 0.388235
+      }
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+    Camera {
+      name "Camera"
+      width 1920
+      height 1080
+    }
+  ]
+  name "cameraRobot"
+  controller "<extern>"
+  supervisor TRUE
+}
+Pose {
+  translation 0 0 0.001
+  children [
+    DEF Marker Solid {
+      translation 1.5 0 0.0001
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 1
+            roughness 0.1
+            metalness 0
+          }
+          geometry Plane {
+            size 0.1 0.1
+          }
+        }
+      ]
+      name "Marker"
+    }
+  ]
+}

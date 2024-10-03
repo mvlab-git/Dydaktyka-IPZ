@@ -1,0 +1,2 @@
+Camera height: 1.25
+Camera angle: 0.610865238
