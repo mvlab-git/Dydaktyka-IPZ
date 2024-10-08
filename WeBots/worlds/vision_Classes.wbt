@@ -1,0 +1,76 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.39907039665321364 0.5544496424973063 0.7302933742337088 1.5562747139790167
+  position -0.5111037420052232 -2.01416256499198 4.231641463477164
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 10 10
+}
+DEF ObjectPose Pose {
+  translation 0 0 1
+  children [
+    DEF Object CadShape {
+      url [
+        "P:/Dydaktyka/Dydaktyka-IPZ/WeBots/assets/objects/xbox.obj"
+      ]
+    }
+  ]
+}
+DEF Camera Pose {
+  translation 0 0 1
+  children [
+    Pose {
+      translation 1 0 0
+      rotation 0.5773509358560258 -0.577349935856137 -0.577349935856137 2.09439
+      children [
+        Shape {
+          appearance DEF ShapeAppearance PBRAppearance {
+            baseColor 0 0 0
+            roughness 1
+            metalness 0
+            emissiveIntensity 0
+          }
+          geometry Plane {
+            size 2.5 2
+          }
+        }
+      ]
+    }
+    Robot {
+      translation -0.75 0 0
+      rotation 0 1 0 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 0
+            roughness 1
+            metalness 0
+            emissiveIntensity 0
+          }
+          geometry Box {
+            size 0.1 0.1 0.1
+          }
+        }
+        Camera {
+          name "Camera"
+          width 1920
+          height 1080
+        }
+      ]
+      name "cameraRobot"
+      controller "<extern>"
+      supervisor TRUE
+    }
+  ]
+}
