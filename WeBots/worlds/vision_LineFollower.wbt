@@ -2,61 +2,227 @@
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/GalvanizedMetal.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Rubber.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Asphalt.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.12909345059705374 -0.9198723003945705 -0.370364458310658 5.5587577627595195
-  position -5.201779914442067 -0.5712947945003153 7.75274182716619
+  orientation -0.052783772503535255 0.9961215357390513 0.07039715475194497 1.2352970828584005
+  position -3.3662644178612773 1.2751495627481662 14.96061885570062
+  follow "robot_hinge"
+  followType "None"
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
-RectangleArena {
-  floorSize 10 10
-}
-DEF cameraRobot Robot {
-  translation 0 0 1.25
-  rotation 0 1 0 0.785398163
+Solid {
   children [
-    Shape {
-      appearance PBRAppearance {
-        baseColor 0.403922 0.368627 0.388235
+    DEF GRASSBASE Shape {
+      appearance Asphalt {
+        textureTransform TextureTransform {
+          scale 8 8
+        }
       }
-      geometry Box {
-        size 0.1 0.1 0.1
+      geometry Plane {
+        size 50 50
       }
-    }
-    Camera {
-      name "Camera"
-      width 1920
-      height 1080
     }
   ]
-  name "cameraRobot"
-  controller "<extern>"
-  supervisor TRUE
+  name "Road"
+  boundingObject USE GRASSBASE
 }
-Pose {
-  translation 0 0 0.001
+Robot {
+  translation 0.11 3 0.25
+  rotation 0 0 1 1.5708
   children [
-    DEF Line Solid {
-      translation 0 0 0.0001
+    Camera {
+      translation 0.5 0 0.08
+      rotation 0 1 0 0.261799
       children [
         Shape {
           appearance PBRAppearance {
-            baseColor 0 0 1
-            roughness 0.1
-            metalness 0
+            baseColor 0 0 0
           }
-          geometry Plane {
-            size 8 0.1
+          geometry Box {
+            size 0.05 0.05 0.05
+          }
+        }
+        Shape {
+          appearance PBRAppearance {
+          }
+          geometry Sphere {
+            radius 0.02
           }
         }
       ]
-      name "BlackMarker"
+      fieldOfView 1.578
+      width 800
+      height 600
+      near 0.1
+    }
+    Hinge2Joint {
+      jointParameters HingeJointParameters {
+        axis 0 0 1
+        anchor 0.3 0.15 0
+      }
+      jointParameters2 JointParameters {
+        axis 0 1 0
+      }
+      device [
+        PositionSensor {
+        }
+        RotationalMotor {
+          name "Hinge::Left"
+          acceleration 10
+          maxVelocity 100
+        }
+      ]
+      device2 [
+        RotationalMotor {
+          name "wheel0"
+          acceleration 10
+          maxVelocity 100
+        }
+      ]
+      endPoint Solid {
+        translation 0.29999999999999993 0.2000129999999991 6.253759999939128e-06
+        rotation -0.9999999999998703 3.601716429833954e-07 3.600572078516787e-07 4.712071375380372
+        children [
+          DEF Wheel Shape {
+            appearance Rubber {
+            }
+            geometry Cylinder {
+              height 0.1
+              radius 0.15
+            }
+          }
+        ]
+        name "wheel1(1)"
+        boundingObject USE Wheel
+        physics Physics {
+          density -1
+          mass 0.5
+        }
+      }
+    }
+    Hinge2Joint {
+      jointParameters HingeJointParameters {
+        axis 0 0 1
+        anchor 0.3 -0.15 0
+      }
+      jointParameters2 JointParameters {
+        axis 0 1 0
+      }
+      device [
+        PositionSensor {
+        }
+        RotationalMotor {
+          name "Hinge::Right"
+          acceleration 10
+          maxVelocity 100
+        }
+      ]
+      device2 [
+        RotationalMotor {
+          name "wheel1"
+          acceleration 10
+          maxVelocity 100
+        }
+      ]
+      endPoint Solid {
+        translation 0.29999999999999993 -0.20002799999999996 6.2537699999292674e-06
+        rotation -0.9999999999998701 -3.6027961781053634e-07 -3.604032860844188e-07 4.712732064457689
+        children [
+          USE Wheel
+        ]
+        name "wheel2(1)"
+        boundingObject USE Wheel
+        physics Physics {
+          density -1
+          mass 0.5
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.3 0.15 0
+      }
+      device [
+        PositionSensor {
+        }
+      ]
+      endPoint Solid {
+        translation -0.3 0.2000000000000005 6.253749999828026e-06
+        rotation -0.9999999999998702 3.6007795169972726e-07 3.6036471025522375e-07 4.713184995270964
+        children [
+          USE Wheel
+        ]
+        name "wheel3"
+        boundingObject USE Wheel
+        physics Physics {
+          density -1
+          mass 0.5
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.3 -0.15 0
+      }
+      device [
+        PositionSensor {
+        }
+      ]
+      endPoint Solid {
+        translation -0.3 -0.20001300000000027 6.2537600000197375e-06
+        rotation -0.9999999999998701 -3.601716405959486e-07 -3.6045866021580424e-07 4.7131856191674775
+        children [
+          USE Wheel
+        ]
+        name "wheel4"
+        boundingObject USE Wheel
+        physics Physics {
+          density -1
+          mass 0.5
+        }
+      }
+    }
+    DEF Hull Shape {
+      appearance GalvanizedMetal {
+        colorOverride 0 0 1
+      }
+      geometry Box {
+        size 1 0.3 0.15
+      }
     }
   ]
+  name "robot_hinge"
+  boundingObject USE Hull
+  physics Physics {
+    density -1
+    mass 1
+  }
+  controller "vehicle_LineFollower_controller"
+}
+Solid {
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../assets/track/track_2.stl"
+        ]
+      }
+    }
+  ]
+  name "Track"
 }

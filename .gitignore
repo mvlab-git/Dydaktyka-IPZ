@@ -1,3 +1,4 @@
 WeBots/worlds/*.jpg
 WeBots/output_object_data/*
 __pycache__/
+WeBots/assets/objects/*

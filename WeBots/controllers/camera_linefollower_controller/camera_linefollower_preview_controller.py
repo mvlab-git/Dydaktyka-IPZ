@@ -3,13 +3,12 @@ sys.path.append("C:\Program Files\Webots\lib\controller\python")
 
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
-from controller import Supervisor,Camera,Keyboard
+from controller import Supervisor,Camera
 import cv2 as cv
 import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-from Transform import Transformer
 from Detect import detect_line
 
 LINE_ROTATION_STEP = 5/180*3.14
