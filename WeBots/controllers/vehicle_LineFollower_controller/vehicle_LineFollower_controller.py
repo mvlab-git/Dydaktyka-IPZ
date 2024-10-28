@@ -77,7 +77,7 @@ while robot.step(timestep) != -1:
     speed = np.mean(mobileRobot.get_current_velocity()) * WHEELRADIUS
     
     print(f"{robot_state.upper()}, {x if x is not None else np.nan:.3f}, {angle:.3f}, {speed:.2f}")
-
+    
     
     
             
