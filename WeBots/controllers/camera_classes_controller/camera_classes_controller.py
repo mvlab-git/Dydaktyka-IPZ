@@ -23,17 +23,18 @@ OBJECTS = [
     "vollayball.dae",
     "xbox.obj"
 ]
-OBJECTS = [os.path.join(r"P:\Dydaktyka\Dydaktyka-IPZ\WeBots\assets\objects", obj) for obj in OBJECTS]
+PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..","..", "assets", "objects"))
+OBJECTS = [os.path.join(PATH, obj) for obj in OBJECTS]
 
 COLORS = [
-    [0,0,0],
+    [0,0,0],    
+    [1,1,1],
     [1,0,0],
     [0,1,0],
     [0,0,1],
-    [1,1,0],
-    [1,0,1],
-    [0,1,1],
-    [1,1,1]
+    #[1,1,0],
+    #[1,0,1],
+    #[0,1,1],
 ]
 
 def getImage(camera:Camera):
@@ -51,21 +52,6 @@ def getImage(camera:Camera):
     image_array = np.frombuffer(bgraImageByteString, dtype=np.uint8).reshape((CAMERA_HEIGHT, CAMERA_WIDTH, 4))
 
     return image_array
-
-def plotHistogram(image:np.ndarray):
-    b,g,r,_ = cv.split(image)
-    # histogram blue
-    b = np.histogram(b.flatten(), bins=256, range=(0, 256))[0].astype(np.float32)
-    g = np.histogram(g.flatten(), bins=256, range=(0, 256))[0].astype(np.float32)
-    r = np.histogram(r.flatten(), bins=256, range=(0, 256))[0].astype(np.float32)
-    b /= np.sum(b)
-    g /= np.sum(g)
-    r /= np.sum(r)
-
-    plt.bar(np.arange(256), b, color='b', alpha=0.5)
-    plt.bar(np.arange(256), g, color='g', alpha=0.5)
-    plt.bar(np.arange(256), r, color='r', alpha=0.5)
-    plt.show()
 
 # Create the Robot instance.
 god_robot = Supervisor()
@@ -111,12 +97,16 @@ node_url.setMFString(0, OBJECTS[index_model])
 node_rotation.setSFRotation([0,0,1,rot])
 node_color.setSFColor(COLORS[index_color])
 
-PATH =  os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),"output_object_data")
+PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..","..", "..", "image_classification", "output_images"))
+os.makedirs(PATH, exist_ok=True)
 
 for i,model in enumerate(OBJECTS):
     node_url.setMFString(0, model)
 
     for j,color in enumerate(COLORS):
+
+        out_path = os.path.join(PATH, f"variant_{j}")
+        os.makedirs(out_path, exist_ok=True)
         
         node_color.setSFColor(color)
 
@@ -130,7 +120,7 @@ for i,model in enumerate(OBJECTS):
             cv.imshow("Preview", image)
             cv.waitKey(1)
 
-            cv.imwrite(os.path.join(PATH, f"object_{i}--{j}--{k}.jpg"), image)
+            cv.imwrite(os.path.join(out_path, f"object_{i}-{k}.png"), image)
 
 while god_robot.step(timestep) != -1:
     # Get and display camera image
